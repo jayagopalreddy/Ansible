@@ -1,0 +1,7 @@
+---
+- hosts: localhost
+  become: yes
+  tasks:
+  - name: install packages
+    apt:
+      name: tree

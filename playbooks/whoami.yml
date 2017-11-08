@@ -1,0 +1,6 @@
+---
+- hosts: all
+  tasks:
+    - name: who is executing
+      shell: whoami
+      register: output
