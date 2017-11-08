@@ -1,0 +1,9 @@
+[redhat]
+54.152.192.70
+
+[ubuntu]
+localhost
+
+[other]
+ec2-54-152-192-70.compute-1.amazonaws.com
+localhost
