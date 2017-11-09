@@ -6,7 +6,7 @@
   - name: install "{{item}}" in RedHat
     yum:
       name: "{{item}}"
-      state: present
+      state: absent
     with_items:
     - git
     - httpd
@@ -16,7 +16,7 @@
   - name: install "{{item}}" in ubuntu
     apt:
       name: "{{item}}"
-      state: present
+      state: absent
     with_items:
     - apache2
     - tree
