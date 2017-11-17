@@ -2,17 +2,19 @@
 - hosts: others
   become: yes
   tasks:
-  - name: install tree in RedHat
+  - name: install "{{webserver_package}}" in RedHat
     yum:
       name: "{{webserver_package}}"
       state: present
     when: ansible_os_family == "RedHat"
-  - debug: 
+  - name: just print line
+    debug: 
       msg: "{{webserver_package}}"
-  - name: install tree in Ubuntu
+  - name: install webserver in Ubuntu
     apt:
       name: "{{ webserver_package }}"
       state: present
     when: ansible_os_family == "Debian"
-  - debug:
+  - name: print the content
+    debug:
       msg: "{{ webserver_package }}"

@@ -1,0 +1,10 @@
+---
+# handlers file for jay.apache
+- name: restart redhat apache
+  service:
+    name: "{{ redhat_pkg }}"
+    state: restarted
+- name: restart ubuntu apache
+  service:
+    name: "{{ ubuntu_pkg }}"
+    state: restarted

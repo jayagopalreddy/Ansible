@@ -1,0 +1,7 @@
+---
+# vars file for jay.apache
+redhat_pkg:
+  - httpd
+
+ubuntu_pkg:
+  - apache2

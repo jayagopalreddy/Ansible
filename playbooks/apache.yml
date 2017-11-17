@@ -1,0 +1,37 @@
+---
+- hosts: others
+  become: yes
+  vars:
+    package_deb: apache2
+    package_rhel: httpd
+  tasks:
+  - name: install apache on RedHat
+    yum:
+      name: "{{package_rhel}}"
+      state: present
+    when: ansible_os_family == "RedHat"
+  - name: install apache on ubuntu
+    apt:
+      name: "{{ package_deb }}"
+      state: present
+    when: ansible_os_family == "Debian"
+  - template:
+      src: /home/ubuntu/index.html.j2
+      dest: /var/www/html/index.html
+    notify: restart apache
+    register: status
+  - name: set service name for ubutnu
+    set_fact:
+      package: "{{ package_deb }}"
+    when: ansible_os_family == "Debian"
+  - name: set service name for redhat
+    set_fact:
+      package: "{{ package_rhel }}"
+    when: ansible_os_family == "RedHat"
+    notify: restart apache
+    register: result
+  handlers:
+    - name: restart apache
+      service:
+        name: "{{package}}"
+        state: restarted
