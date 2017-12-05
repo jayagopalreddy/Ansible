@@ -1,0 +1,6 @@
+---
+- hosts: all
+  tasks:
+  - name: print free memory
+    debug:
+      msg: " free memory is {{ ansible_memory_mb.real.free }}"

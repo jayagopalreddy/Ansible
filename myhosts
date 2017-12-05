@@ -1,0 +1,9 @@
+[redhat]
+ip-10-0-4-195.us-west-2.compute.internal
+
+[ubuntu]
+localhost
+
+[others]
+localhost
+ip-10-0-4-195.us-west-2.compute.internal

@@ -1,0 +1,32 @@
+---
+- hosts: ubuntu
+  become: yes
+  gather_facts: no
+  tasks:
+  - name: Install open JDK
+    apt:
+      name: openjdk-8-jdk
+      state: latest
+  - name: get key from link
+    get_url:
+      url: https://pkg.jenkins.io/debian/jenkins-ci.org.key
+      dest: /home/ansible
+  - name: add key
+    apt_key:
+      url: https://pkg.jenkins.io/debian/jenkins-ci.org.key
+#  - name: run the command
+#    shell: wget -q -O - https://pkg.jenkins.io/debian/jenkins-ci.org.key | sudo apt-key add -
+  - name: run below command
+    shell: echo deb https://pkg.jenkins.io/debian-stable binary/ | sudo tee /etc/apt/sources.list.d/jenkins.list
+  - name: update all
+    apt:
+      name: "*"
+      #state: latest
+  - name: install jenkins
+    apt:
+      name: jenkins
+  - name: start jenkins
+    service:
+      name: jenkins
+      state: started
+      

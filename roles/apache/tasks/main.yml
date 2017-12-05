@@ -1,0 +1,39 @@
+---
+# tasks file for jay.apache
+- name: Install apache in RedHat
+  yum:
+    name: "{{ redhat_pkg }}"
+    state: present
+  when: ansible_os_family == "RedHat"
+- name: Install apache in Ubuntu
+  apt:
+    name: "{{ ubuntu_pkg }}"
+    state: present
+  when: ansible_os_family == "Debian"
+- name: copy file from local to remote
+  template:
+    src: index.html.j2
+    dest: /var/www/html/index.html
+#- name: set service name for redhat
+#  set_fact:
+#    package: "{{ redhat_pkg }}"
+#  when: ansible_os_family == "RedHat"
+#- name: set service name for Ubuntu
+#  set_fact:
+#    package: "{{ ubuntu_pkg }}"
+#  when: ansible_os_family == "Debian"
+#- name: start apache
+#  service:
+#    name: "{{package}}"
+#    enbaled: yes
+#    state: started
+- name: test by print
+  debug:
+    msg: giving a notification for RedHat
+  notify: restart redhat apache
+  when: ansible_os_family == "RedHat"
+- name: testing for notification
+  debug:
+    msg: giving a notification for Ubuntu
+  notify: restart ubuntu apache
+  when: ansible_os_family == "Debian"
