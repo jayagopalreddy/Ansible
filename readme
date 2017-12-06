@@ -30,3 +30,14 @@ vi /etc/ssh/sshd_config (password authantication Yes)
 su - ansible
 ssh-keygen
 ssh-copy-id hostname (hostname of node)
+
+##########Git Setup#########
+apt-get install git
+git init
+git config --global user.name xxx
+git config --global user.email xxx@gmail.com
+git remote add origin https://github.com/jayagopalreddy/Ansible.git
+git remote set-url origin https://github.com/jayagopalreddy/Ansible.git
+git pull URL
+git push origin master
+
