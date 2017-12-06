@@ -30,9 +30,3 @@ vi /etc/ssh/sshd_config (password authantication Yes)
 su - ansible
 ssh-keygen
 ssh-copy-id hostname (hostname of node)
-
-<<<<<<< HEAD
-rdrtgfhkjk, uhnjn#####
-dfyjkjbk
-=======
->>>>>>> c6d0a2720bc00dba335cf4ffb4b69b3e54240adc
