@@ -1,0 +1,15 @@
+---
+- hosts: ubuntu
+  become: yes
+  tasks:
+  - name: Install rundeck
+    get_url:
+      url: http://dl.bintray.com/rundeck/rundeck-deb/rundeck-2.10.0-1-GA.deb
+      dest: /etc/ansible/
+  - name: Install rundeck
+    apt:
+      deb: http://dl.bintray.com/rundeck/rundeck-deb/rundeck-2.10.0-1-GA.deb
+  - name:
+    service:
+      name: rundeckd
+      state: started

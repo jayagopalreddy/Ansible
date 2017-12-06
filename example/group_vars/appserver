@@ -1,0 +1,6 @@
+---
+redhat_pkg:
+  - httpd
+
+ubuntu_pkg:
+  - apache2

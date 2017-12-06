@@ -1,0 +1,20 @@
+---
+- hosts: others
+  become: yes
+  tasks:
+  - name: install "{{webserver_package}}" in RedHat
+    yum:
+      name: "{{webserver_package}}"
+      state: present
+    when: ansible_os_family == "RedHat"
+  - name: just print line
+    debug: 
+      msg: "{{webserver_package}}"
+  - name: install webserver in Ubuntu
+    apt:
+      name: "{{ webserver_package }}"
+      state: present
+    when: ansible_os_family == "Debian"
+  - name: print the content
+    debug:
+      msg: "{{ webserver_package }}"

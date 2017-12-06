@@ -1,0 +1,5 @@
+---
+- hosts: redhat
+  tasks:
+  - name: ping all
+    ping:

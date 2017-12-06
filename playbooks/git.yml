@@ -1,0 +1,8 @@
+---
+- hosts: ubuntu
+  become: yes
+  gather_facts: no
+  tasks:
+  - name: install Git
+    apt:
+      name: git

@@ -1,0 +1,10 @@
+---
+- hosts: others
+  become: yes
+  tasks:
+  - name: restart apache in Redhat
+    service:
+      name: "{{ item }}"
+      state: started
+    with_items: redhat_pkg
+    when: ansible_os_family == "RedHat"
