@@ -1,0 +1,35 @@
+Pull and Push Model:-
+
+Pull Model:    Chef, Puppet (agent needed)
+Push Model:    Ansible, Salt (no agent)
+
+Install Ansible on Ubuntu:-
+sudo apt-get update
+sudo apt-get install software-properties-common
+sudo apt-add-repository ppa:ansible/ansible
+sudo apt-get update
+sudo apt-get install ansible
+
+########## Ansible Master Setup#######
+sudo su -
+adduser ansible
+passwd ansible
+visudo (for sudo access)    ansible   ALL=(ALL:ALL) ALL
+vi /etc/ssh/sshd_config (password authantication Yes)
+su - ansible
+ssh-keygen
+ssh-copy-id hostname (hostname of node)
+
+
+#########Ansible Node SetUP#######
+sudo su -
+adduser ansible
+passwd ansible
+visudo (for sudo access)    ansible   ALL=(ALL:ALL) ALL
+vi /etc/ssh/sshd_config (password authantication Yes)
+su - ansible
+ssh-keygen
+ssh-copy-id hostname (hostname of node)
+
+#####
+dfyjkjbk
