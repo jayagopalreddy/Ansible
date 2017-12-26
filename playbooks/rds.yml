@@ -1,0 +1,30 @@
+---
+- hosts: localhost
+  become: yes
+  #gather_facts: no     
+  tasks:
+    - name: Create mysql on RDS in a VPC
+      rds:
+        command: create
+        instance_name: ansible-rds
+        region: us-east-1
+        size: 20
+        instance_type: db.t2.micro
+        db_engine: MySQL
+        # Use default (latest) DB engine (e.g., 9.3.x)
+        # engine_version: "{{ engine_version }}"
+        subnet: ansible 
+        # Use default db parameter group
+        # parameter_group: "{{ parameter_group }}"
+        multi_zone: no
+        port: 3306
+        db_name: ansiblerds
+        username: ansible
+        password: 123456678
+        vpc_security_groups: sg-8b1e90f8
+        #iops: "{{ iops }}"
+        #maint_window: "{{ maint_window }}"
+        #backup_window: "{{ backup_window }}"
+        backup_retention: 0
+        #zone: "{{ zone }}"
+      register: rds
