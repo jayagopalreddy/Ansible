@@ -1,0 +1,70 @@
+---
+- hosts: localhost
+  become: yes
+  vars:
+    region: us-east-1
+    size: 20
+    instance_type: db.t2.micro
+    db_engine: MySQL
+    # Optional: Postgres DB engine rev
+    engine_version: 5.6.37
+    # Optional: RDS Parameter Group
+    #parameter_group: dbpg1
+    # Required: RDS Subnet Group for multi-zone
+    subnet: subnet-vpc
+    # Required: Database security group ID
+    security_groups: sg-91a287ed
+    iops: 1000
+    # Window in format of ddd:hh24:mi-ddd:hh24:mi, eg: Mon:01:00-Mon:01:15 (minimum 30 mins)
+    #maint_window: "Sun:01:00-Sun:01:30"
+    # Window in format of hh24:mi-ddd:hh24:mi, eg: 01:15-01:45 (minimum 30 mins)
+    #backup_window: "02:00-02:30"
+    # Days to save backup snapshots
+    backup_retention: 0
+    # Do not set zone for Multi-AZ launches
+    zone: no
+    rds_instance_name: ansible-rds
+    db_name: ansiblerds
+    username: ansible
+    password: 12345678
+  tasks:
+    - name: Create mysql on RDS in a VPC
+      rds:
+        command: create
+        instance_name: ansible-rds
+        region: "{{ region }}"
+        size: "{{ size }}"
+        instance_type: "{{ instance_type }}"
+        db_engine: "{{ db_engine }}"
+        engine_version: "{{ engine_version }}"
+        # Use default (latest) DB engine (e.g., 9.3.x)
+        # engine_version: "{{ engine_version }}"
+        subnet: "{{ subnet }}"
+        # Use default db parameter group
+        # parameter_group: "{{ parameter_group }}"
+        multi_zone: no
+        port: 3306
+        db_name: ansiblerds
+        username: ansible
+        password: 123456678
+        vpc_security_groups: "{{ security_groups }}"
+        #iops: "{{ iops }}"
+        #maint_window: "{{ maint_window }}"
+        #backup_window: "{{ backup_window }}"
+        backup_retention: 0
+        #zone: "{{ zone }}"
+        tags:
+          Environment: testing
+          Application: ansible
+      register: rds
+    - name: Debug RDS facts
+      rds:
+        command: facts
+        instance_name: ansible-rds
+        region: "{{ region }}"
+      register: rds_facts
+      until: not(rds_facts.instance.endpoint is none)
+      retries: 20
+      delay: 30
+
+    - debug: var=rds_facts

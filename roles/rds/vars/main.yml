@@ -1,0 +1,27 @@
+---
+# vars file for rds
+region: us-east-1
+size: 20
+instance_type: db.t2.micro
+db_engine: MySQL
+# Optional: Postgres DB engine rev
+engine_version: 5.6.37
+# Optional: RDS Parameter Group
+#parameter_group: dbpg1
+# Required: RDS Subnet Group for multi-zone
+subnet: subnet-vpc
+# Required: Database security group ID
+security_groups: sg-91a287ed
+iops: 1000
+#Window in format of ddd:hh24:mi-ddd:hh24:mi, eg: Mon:01:00-Mon:01:15 (minimum 30 mins)
+#maint_window: "Sun:01:00-Sun:01:30"
+#Window in format of hh24:mi-ddd:hh24:mi, eg: 01:15-01:45 (minimum 30 mins)
+#backup_window: "02:00-02:30"
+#Days to save backup snapshots
+backup_retention: 0
+#Do not set zone for Multi-AZ launches
+zone: no
+rds_instance_name: ansible-rds
+db_name: ansiblerds
+username: ansible
+password: 12345678
