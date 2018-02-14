@@ -16,9 +16,9 @@
     #parameter_group: "{{ parameter_group }}"
     multi_zone: no
     port: 3306
-    db_name: ansiblerds
-    username: ansible
-    password: 123456678
+    db_name: "{{ db_name }}"
+    username: "{{ username }}"
+    password: "{{ password }}"
     vpc_security_groups: "{{ security_groups }}"
     #iops: "{{ iops }}"
     #maint_window: "{{ maint_window }}"
