@@ -11,11 +11,7 @@
 
 # some basic default values...
 
-inventory      = /etc/ansible/hosts
-remote_user = ec2-user
-private_key_file = /home/jenkins/jenkins.pem
-host_key_checking = False
-log_path=/var/log/ansible
+#inventory      = /etc/ansible/hosts
 #library        = /usr/share/my_modules/
 #module_utils   = /usr/share/my_module_utils/
 #remote_tmp     = ~/.ansible/tmp
@@ -62,7 +58,7 @@ log_path=/var/log/ansible
 #roles_path    = /etc/ansible/roles
 
 # uncomment this to disable SSH key host checking
-host_key_checking = False
+#host_key_checking = False
 
 # change the default callback, you can only have one 'stdout' type  enabled at a time.
 #stdout_callback = skippy
@@ -102,7 +98,7 @@ host_key_checking = False
 
 # logging is off by default unless this path is defined
 # if so defined, consider logrotate
-log_path = /var/log/ansible.log
+#log_path = /var/log/ansible.log
 
 # default module name for /usr/bin/ansible
 #module_name = command
@@ -189,7 +185,7 @@ log_path = /var/log/ansible.log
 #connection_plugins = /usr/share/ansible/plugins/connection
 #lookup_plugins     = /usr/share/ansible/plugins/lookup
 #inventory_plugins  = /usr/share/ansible/plugins/inventory
-vars_plugins       = /usr/share/ansible/plugins/vars
+#vars_plugins       = /usr/share/ansible/plugins/vars
 #filter_plugins     = /usr/share/ansible/plugins/filter
 #test_plugins       = /usr/share/ansible/plugins/test
 #terminal_plugins   = /usr/share/ansible/plugins/terminal
