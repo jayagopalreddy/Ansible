@@ -3,7 +3,7 @@ version: 0.0
 os: linux
 files:
   - source: /
-    destination: /var/www/ansible-jaya
+    destination: /var/www/jaya.com
 hooks:
   BeforeInstall:
     - location: .scripts/apache.sh
