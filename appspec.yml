@@ -3,6 +3,7 @@ os: linux
 files:  
  – source: /
    destination: /var/www/jaya.com
+
 hooks:  
  BeforeInstall:
    – location: scripts/install_dependencies.sh
