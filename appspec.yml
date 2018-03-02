@@ -3,10 +3,10 @@ version: 0.0
 os: linux
 files:
   - source: /
-    destination: /home/ec2-user
+    destination: /var/www/ansible-jaya
 hooks:
   BeforeInstall:
-    - location: ./home/ec2-user/apache.sh
+    - location: .scripts/apache.sh
       timeout: 300
       runas: root
 #  AfterInstall:
@@ -14,7 +14,7 @@ hooks:
 #      timeout: 300
 #      runas: root
   ApplicationStart:
-    - location: ./home/ec2-user/apache_start.sh
+    - location: .scripts/apache_start.sh
       timeout: 300
       runas: root
 ### https://github.com/abel30567/AWS_CodeDeploy_Example
