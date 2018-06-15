@@ -1,0 +1,18 @@
+---
+- hosts: localhost
+  become: yes
+  roles:
+  - ec2_spin
+  tasks:
+  - name: pause the script for 180 seconds
+    pause:
+      seconds: 180
+- hosts: localhost
+  become: yes
+  roles:
+  - setup
+  tasks:
+  - name: pause the script for 180 seconds
+    pause:
+      seconds: 180
+

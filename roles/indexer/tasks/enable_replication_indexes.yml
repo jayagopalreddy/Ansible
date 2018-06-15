@@ -1,0 +1,14 @@
+---
+- name: create a user file
+  file:
+    path: /opt/splunk/etc/system/local/indexes.conf
+    state: touch
+    owner: splunk
+    group: splunk
+    mode: 0660
+- name: add multiple lines in a file
+  lineinfile:
+    dest: /opt/splunk/etc/system/local/indexes.conf
+    line: "{{ item }}"
+  with_items:
+    - "repFactor = auto"

@@ -1,0 +1,14 @@
+- name: enabling clustering
+  lineinfile:
+    dest: /opt/splunk/etc/system/local/server.conf
+    line: "{{ item }}"
+  with_items:
+    - "[replication_port://9080]"
+    - "[clustering]"
+    - "master_uri = https://cloudspotter:8089"
+    - "mode = slave"
+- name: change version in a file
+  lineinfile:
+    dest: /opt/splunk/etc/system/local/server.conf
+    regexp: 'master_uri = https://cloudspotter:8089'
+    line: 'master_uri = https://{{ dslm_ip  }}:8089'

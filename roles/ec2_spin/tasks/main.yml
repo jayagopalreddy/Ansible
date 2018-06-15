@@ -1,0 +1,29 @@
+---
+# tasks file for ec2_spin
+- name: Launch Instance
+  ec2:
+    key_name: "{{ pem }}"
+    group: "{{ sg_name }}"
+    instance_type: "{{ instance_type }}"
+    image: "{{ ami_id }}"
+    #user_data: "{{ lookup('file', '/etc/ansible/role/user_data.sh') }}"
+    wait: yes
+    volumes:
+      - device_name: /dev/xvda
+        volume_type: gp2
+        volume_size: "{{ volume_size }}"
+        delete_on_termination: yes
+    region: "{{ region }}"
+    vpc_subnet_id: "{{ subnet }}"
+    assign_public_ip: yes
+    count: 1
+    instance_tags:
+      Name: Splunk-{{ item }}
+      Team: Nutanix
+  register: ec2
+  with_items:
+    - IDX1
+    - IDX2
+    - SH-1
+    - SH-2
+    - DSLM

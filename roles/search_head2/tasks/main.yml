@@ -1,0 +1,12 @@
+---
+# tasks file for search_head2
+- name: run below command on server two
+  shell: /opt/splunk/bin/splunk init shcluster-config -mgmt_uri https://{{ sh_two }}:8089 -replication_factor 1 -replication_port 9091 -shcluster_label shcluster_01 -auth admin:Welcome123$
+  become_user: splunk
+- name: restart splunk
+  service:
+    name: splunk
+    state: restarted
+- name: pause the script 
+  pause:
+    seconds: 180

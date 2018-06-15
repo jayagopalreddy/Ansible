@@ -1,0 +1,6 @@
+---
+# tasks file for dslm_cm
+- include: enable_deployment_server.yml
+- include: splunk_restart.yml
+- include: enable_cluster_master.yml
+- include: splunk_restart.yml

@@ -1,0 +1,8 @@
+---
+# tasks file for indexer
+- include: receive_data.yml
+- include: splunk_restart.yml
+- include: enable_cluster_slave.yml
+- include: splunk_restart.yml
+- include: enable_replication_indexes.yml
+- include: splunk_restart.yml

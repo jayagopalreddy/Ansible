@@ -1,0 +1,41 @@
+- hosts: splunk_all
+  become: yes
+  roles:
+  - splunk_all
+  tasks:
+  - name: pause the script for 100 seconds
+    pause:
+      seconds: 100
+
+- hosts: indexers
+  become: yes
+  roles:
+  - indexer
+  tasks:
+  - name: pause the script for 100 seconds
+    pause:
+      seconds: 100
+
+- hosts: dslm
+  become: yes
+  roles:
+  - dslm_cm
+  tasks:
+  - name: pause the script for 100 seconds
+    pause:
+      seconds: 100
+
+- hosts: sh1
+  become: yes
+  roles:
+  - search_head1
+
+- hosts: sh2
+  become: yes
+  roles:
+  - search_head2
+
+- hosts: sh1
+  become: yes
+  roles:
+  - search_head3

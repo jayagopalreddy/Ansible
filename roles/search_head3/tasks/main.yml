@@ -1,0 +1,5 @@
+---
+# tasks file for search_head3
+- name: run below command to enable captain
+  shell: /opt/splunk/bin/splunk bootstrap shcluster-captain -servers_list "https://{{ sh_one }}:8089,https://{{ sh_two }}:8089" -auth admin:Welcome123$ 
+  become_user: splunk

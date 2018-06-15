@@ -1,0 +1,9 @@
+---
+- name: Enable SSL configuration
+  shell: /opt/splunk/bin/splunk enable web-ssl
+  become: yes
+  become_user: splunk 
+- name: restart splunk
+  service: 
+    name: splunk 
+    state: restarted

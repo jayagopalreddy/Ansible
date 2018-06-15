@@ -1,0 +1,98 @@
+---
+# tasks file for setup
+- name: get the all Private IPs
+  shell: aws ec2 describe-instances --query "Reservations[].Instances[][PrivateIpAddress]" --filters "Name=tag:Name,Values=Splunk-*" | sed 's/\"//g' | sed 's/\],//g' | sed 's/\[//g' | sed 's/ //g' | sed 's/\]//g' | sed '/^$/d' >/etc/ansible/splunk_all
+- name: add all hosts to the inventory
+  lineinfile:
+    dest: /etc/ansible/splunk_all
+    line: "{{ item }}"
+    insertbefore: BOF
+  with_items:
+    - "[splunk_all]"
+    - ""
+- name: get the IDX private IPs
+  shell: aws ec2 describe-instances --query "Reservations[].Instances[][PrivateIpAddress]" --filters "Name=tag:Name,Values=Splunk-IDX*" | sed 's/\"//g' | sed 's/\],//g' | sed 's/\[//g' | sed 's/ //g' | sed 's/\]//g' | sed '/^$/d' >/etc/ansible/IDX
+- name: add indexer hosts to the IDX
+  lineinfile:
+    dest: /etc/ansible/IDX
+    line: "{{ item }}"
+    insertbefore: BOF
+  with_items:
+    - "[indexers]"
+    - ""
+- name: create sh file for search header
+  file:
+    path: "/etc/ansible/sh"
+    state: touch
+- name: get search header node one
+  shell: aws ec2 describe-instances --query "Reservations[].Instances[][PrivateIpAddress]" --filters "Name=tag:Name,Values=Splunk-SH-1" | sed 's/\"//g' | sed 's/\],//g' | sed 's/\[//g' | sed 's/ //g' | sed 's/\]//g' | sed '/^$/d'
+  register: sh1
+- name: add a host to the inventory
+  lineinfile:
+    path: /etc/ansible/sh
+    line: 'sh1 ansible_ssh_host={{sh1.stdout}}'
+- name: add sh1 IP to the vars
+  lineinfile:
+    dest: /etc/ansible/roles/search_head1/vars/main.yml 
+    regexp: '(sh_one:.*)'
+    line: 'sh_one: {{sh1.stdout}}'
+- name: add sh1 IP to the vars
+  lineinfile:
+    dest: /etc/ansible/roles/search_head3/vars/main.yml
+    regexp: '(sh_one:.*)'
+    line: 'sh_one: {{sh1.stdout}}'
+- name: get search header node two
+  shell: aws ec2 describe-instances --query "Reservations[].Instances[][PrivateIpAddress]" --filters "Name=tag:Name,Values=Splunk-SH-2" | sed 's/\"//g' | sed 's/\],//g' | sed 's/\[//g' | sed 's/ //g' | sed 's/\]//g' | sed '/^$/d'
+  register: sh2
+- name: add node2 to the inventory
+  lineinfile:
+    path: /etc/ansible/sh
+    line: 'sh2 ansible_ssh_host={{sh2.stdout}}'
+- name: add sh2 IP to the vars
+  lineinfile:
+    dest: /etc/ansible/roles/search_head2/vars/main.yml
+    regexp: '(sh_two:.*)'
+    line: 'sh_two: {{sh2.stdout}}'
+- name: add sh2 IP to the vars
+  lineinfile:
+    dest: /etc/ansible/roles/search_head3/vars/main.yml
+    regexp: '(sh_two:.*)'
+    line: 'sh_two: {{sh2.stdout}}'
+- name: add indexer hosts to the searchheader
+  lineinfile:
+    dest: /etc/ansible/sh
+    line: "{{ item }}"
+    insertbefore: BOF
+  with_items:
+    - "[searchhead]"
+    - ""
+- name: get the deployment server private IP
+  shell: aws ec2 describe-instances --query "Reservations[].Instances[][PrivateIpAddress]" --filters "Name=tag:Name,Values=Splunk-DSLM" | sed 's/\"//g' | sed 's/\],//g' | sed 's/\[//g' | sed 's/ //g' | sed 's/\]//g' | sed '/^$/d' >/etc/ansible/dslm
+- name: add indexer hosts to the searchheader
+  lineinfile:
+    dest: /etc/ansible/dslm
+    line: "{{ item }}"
+    insertbefore: BOF
+  with_items:
+    - "[dslm]"
+    - ""
+- name: get the deployment server private IP
+  shell: aws ec2 describe-instances --query "Reservations[].Instances[][PrivateIpAddress]" --filters "Name=tag:Name,Values=Splunk-DSLM" | sed 's/\"//g' | sed 's/\],//g' | sed 's/\[//g' | sed 's/ //g' | sed 's/\]//g' | sed '/^$/d'
+  register: dslm_ip
+- name: add the dslm IP in indexer vars
+  lineinfile:
+    dest: /etc/ansible/roles/indexer/vars/main.yml
+    regexp: '(dslm_ip:.*)'
+    line: 'dslm_ip: {{dslm_ip.stdout}}'
+- name: create a inventory
+  shell: |
+    cat /etc/ansible/splunk_all >/etc/ansible/inventory
+    cat /etc/ansible/IDX >>/etc/ansible/inventory
+    cat /etc/ansible/sh >>/etc/ansible/inventory
+    cat /etc/ansible/dslm >>/etc/ansible/inventory
+    cat /etc/ansible/inventory >/etc/ansible/roles/inventories
+    rm -rf /etc/ansible/splunk_all
+    rm -rf /etc/ansible/IDX
+    rm -rf /etc/ansible/sh
+    rm -rf /etc/ansible/dslm
+    rm -rf /etc/ansible/inventory

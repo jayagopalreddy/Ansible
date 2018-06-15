@@ -1,0 +1,9 @@
+---
+- name: copy rpm file from source to destination
+  copy:
+    #src: /home/ec2-user/splunk-7.1.0-2e75b3406c5b-linux-2.6-x86_64.rpm
+    src: /home/ubuntu/splunk-7.1.0-2e75b3406c5b-linux-2.6-x86_64.rpm
+    dest: /tmp/splunk-7.1.0-2e75b3406c5b-linux-2.6-x86_64.rpm
+    owner: root
+    group: root
+    mode: u=rw,g=rw,o=r

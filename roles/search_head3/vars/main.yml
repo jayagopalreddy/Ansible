@@ -1,0 +1,4 @@
+---
+# vars file for search_head3
+sh_one: 10.0.4.212
+sh_two: 10.0.4.99

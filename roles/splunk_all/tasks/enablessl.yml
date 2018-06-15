@@ -1,0 +1,15 @@
+---
+- name: create a file 
+  file:
+    path: /opt/splunk/etc/system/local/web.conf
+    state: touch
+    owner: splunk
+    group: splunk
+    mode: 0660
+- name: add multiple lines in a file
+  lineinfile:
+    dest: /opt/splunk/etc/system/local/web.conf
+    line: "{{ item }}"
+  with_items:
+    - "[settings]"
+    - "enableSplunkWebSSL = 1"

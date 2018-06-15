@@ -1,0 +1,6 @@
+---
+# handlers file for dslm_cm
+- name: restart splunk
+  service: 
+    name: splunk 
+    state: restarted

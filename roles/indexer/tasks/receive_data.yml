@@ -1,0 +1,8 @@
+---
+- name: add a lines in a file
+  lineinfile:
+    dest: /opt/splunk/etc/system/local/inputs.conf
+    line: "{{ item }}"
+  with_items:
+    - "[splunktcp://9997]"
+

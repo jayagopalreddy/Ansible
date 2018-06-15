@@ -1,0 +1,17 @@
+---
+- name: create a deplyment server file
+  file:
+    path: /opt/splunk/etc/system/local/serverclass.conf
+    state: touch
+    owner: splunk
+    group: splunk
+    mode: 0660
+- name: add multiple lines in a file
+  lineinfile:
+    dest: /opt/splunk/etc/system/local/serverclass.conf
+    line: "{{ item }}"
+  with_items:
+    - "[global]"
+    - "whitelist.0=*"
+    - "[serverClass:AllApps]"
+    - "[serverClass:AllApps:app:*]"

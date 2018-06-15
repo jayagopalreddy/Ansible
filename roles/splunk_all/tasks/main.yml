@@ -1,0 +1,9 @@
+---
+# tasks file for splunk_all
+- include: copy.yml
+- include: install.yml
+  tags:
+   - install
+- include: enablessl.yml
+- include: admin_credentials.yml
+  notify: restart splunk

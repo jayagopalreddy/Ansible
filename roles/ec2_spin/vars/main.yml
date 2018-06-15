@@ -1,0 +1,9 @@
+---
+# vars file for ec2_spin
+pem: jenkins
+sg_name: launch-wizard-29
+instance_type: t2.micro
+ami_id: ami-e251209a
+volume_size: 15
+region: us-west-2
+subnet: subnet-0753f74e
